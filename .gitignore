@@ -1,0 +1,8 @@
+__pycache__/*
+venv/*
+run_app.sh
+scrapers/*.exe
+scrapers/debug.log
+scrapers/scrapers/__pycache__/*
+scrapers/scrapers/.ipynb_checkpoints/*
+scrapers/scrapers/*.exe
