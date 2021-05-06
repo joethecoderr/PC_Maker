@@ -37,16 +37,30 @@ def hello():
         result = model.predict(instance_transformed)
         
         df_low, df_rec = Create_Dataframes.create_dataframes("low_req_pcbenchmark", "rec_req_pcbenchmark")
+        
+        
         Graphics = []
+        Processors = []
         cluster_predicted_idx = np.where(model.labels_==result[0])
+        
         for idx in cluster_predicted_idx[0]:
-            Graphics.append(df_low['Graphics'][idx])
-         
-        unique, counts = np.unique(Graphics, return_counts=True)
-            
-        max_value = max(counts) 
-        max_graphic = unique[np.where(counts==max_value)]
-        return jsonify({'Prediction':str(max_graphic) })
+            Graphics.append(df_rec['Graphics'][idx])
+            Processors.append(df_rec["Processor"][idx])
+        unique_graphics, counts_graphics = np.unique(Graphics, return_counts=True)
+        unique_processors,counts_processors = np.unique(Processors, return_counts=True)
+        
+        
+        max_value_graphics = max(counts_graphics) 
+        max_graphic = unique_graphics[np.where(counts_graphics==max_value_graphics)]
+        
+        max_value_processors = max(counts_processors) 
+        max_processor = unique_processors[np.where(counts_processors==max_value_processors)]
+        
+        return jsonify({'Graphic Card':str(max_graphic),
+                        'Processor':str(max_processor),
+                        'Ram': str(ram), 
+                        'Disk Space': str(size)
+                        })
 
 @app.route('/try', methods=['GET', 'POST'])
 @cross_origin(allow_headers=['Content-Type' ], supports_credentials=True)

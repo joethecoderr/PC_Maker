@@ -10,12 +10,12 @@ def import_model_transformers():
     pass
     
 def transform_input(input_data):
-    OHE_processor_low = joblib.load("Transformers/OHE_processor_low.pkl")
-    OHE_Graphics_low = joblib.load("Transformers/OHE_Graphics_low.pkl")
-    OHE_Windows_low = joblib.load("Transformers/OHE_Windows_low.pkl")
-    size_scaler_low = joblib.load("Transformers/size_scaler_low.pkl")
-    Ram_scaler_low = joblib.load("Transformers/Ram_scaler_low.pkl")
-    PCA_transformer_90_low = joblib.load("Transformers/PCA_transformer_90_low.pkl")
+    OHE_processor_low = joblib.load("Transformers/OHE_processor_rec.pkl")
+    OHE_Graphics_low = joblib.load("Transformers/OHE_Graphics_rec.pkl")
+    OHE_Windows_low = joblib.load("Transformers/OHE_Windows_rec.pkl")
+    size_scaler_low = joblib.load("Transformers/size_scaler_rec.pkl")
+    Ram_scaler_low = joblib.load("Transformers/Ram_scaler_rec.pkl")
+    PCA_transformer_90_low = joblib.load("Transformers/PCA_transformer_90_rec.pkl")
     df = pd.DataFrame(input_data, columns = ["id", "Game Name", "Description", "OS", "Processor", "Ram", "Graphics", "DirectX", "size", "Notes"])
     clean_GB = transformers.clean_GB_df()
     df = clean_GB.transform(df, "size")
