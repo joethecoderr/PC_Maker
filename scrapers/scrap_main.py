@@ -2,16 +2,16 @@ import argparse
 import logging
 import pandas as  pd
 import numpy as np
-from scrapers import scrap_from_pcbenchmark
+from scrapers import scrap_from_pcbenchmark 
 from scrapers import scrap_from_steam
-#from scrapers import can_you_run_it
+from scrapers import can_you_run_it
 import get_games
 from requirements import LowReqSteam, RecReqSteam, LowReqPCGBM, RecReqPCGBM
 from requirements import LowReqCanYouRunIt, RecReqCanYouRunIt
 import re
 from base import Base, engine, Session
 from scrapers.can_you_run_it import scrape
-
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 def save_data_req_steam(game,descr, data, low_or_rec):
     Base.metadata.create_all(engine)
@@ -185,26 +185,47 @@ def scrape_from_canyourunit(games):
 #         save_data_req_steam(game, data_desc, merged_arr_rec, "rec")
 #         data_desc_pcbm, merged_arr_min_pcbm, merged_arr_rec_pcbm  = scrap_from_pcbenchmark.scrap_page(game)
 
-if __name__ == '__main__':
-    games = get_games.Get_names('https://www.pcgamebenchmark.com/best-pc-games/page-56?tags=&sort=0')
-    print(games)
-    
-    scrape_from_canyourunit(games)
-    
-    # for game in games[221:]: #Sabotaj idx
-    
-        
-    #     if game != "Genshin Impact" and  game != "Hogwarts Legacy" and game != "Cooking Simulator" and game != "FINAL FANTASY XV" and game != "コイカツ！ / Koikatsu Party" and game != "Sabotaj" and game != "Google Stadia" :
-
-    #         data_desc, merged_arr_min, merged_arr_rec, link_path  = scrap_from_steam.scrap_page(game)
-    #         if game.replace(" ", "_") in link_path:
-    #             save_data_req_steam(game, data_desc,merged_arr_min, "low")
-    #             save_data_req_steam(game, data_desc, merged_arr_rec, "rec")    
-                   
-    #     if game != "Attack on Titan 2 - A.O.T.2 - 進撃の巨人２" and game != "コイカツ！ / Koikatsu Party"  and game != "Sabotaj"  and game != "Google Stadia":
+def scrap_save_new_game(game):
+    try:
+        data_desc_pcbm, merged_arr_min_pcbm, merged_arr_rec_pcbm  = scrap_from_pcbenchmark.scrap_page(game)
+        save_data_req_pcbm(game,data_desc_pcbm, merged_arr_min_pcbm, "low")
+        save_data_req_pcbm(game,data_desc_pcbm, merged_arr_rec_pcbm, "rec")
+    except TimeoutException:
+        data_desc = ""
+        merged_arr_min = []
+        merged_arr_rec = []
             
-    #         data_desc_pcbm, merged_arr_min_pcbm, merged_arr_rec_pcbm  = scrap_from_pcbenchmark.scrap_page(game)
-    #         save_data_req_pcbm(game,data_desc_pcbm, merged_arr_min_pcbm, "low")
-    #         save_data_req_pcbm(game,data_desc_pcbm, merged_arr_rec_pcbm, "rec")
-
-
+    
+# if __name__ == '__main__':
+#     games = get_games.Get_names('https://www.pcgamebenchmark.com/best-pc-games/page-56?tags=&sort=0')
+#     print(games)
+    
+#     scrape_from_canyourunit(games)
+    
+#     for game in games[603:]: 
+    
+#         game = re.sub('[^0-9a-zA-Z\s]+', '', game)  
+       
+#         # try:
+#         #     data_desc, merged_arr_min, merged_arr_rec, link_path  = scrap_from_steam.scrap_page(game)
+#         #     if link_path != "" or game.replace(" ", "_") in link_path:
+#         #         save_data_req_steam(game, data_desc,merged_arr_min, "low")
+#         #         save_data_req_steam(game, data_desc, merged_arr_rec, "rec")  
+#         # except NoSuchElementException:
+#         #     data_desc = ""
+#         #     merged_arr_min = []
+#         #     merged_arr_rec = []
+#         #     link_path = ""
+            
+          
+          
+#         #if game != "Attack on Titan 2 - A.O.T.2 - 進撃の巨人２" and game != "コイカツ！ / Koikatsu Party"  and game != "Sabotaj"  and game != "Google Stadia":
+#         try:
+#             data_desc_pcbm, merged_arr_min_pcbm, merged_arr_rec_pcbm  = scrap_from_pcbenchmark.scrap_page(game)
+#             save_data_req_pcbm(game,data_desc_pcbm, merged_arr_min_pcbm, "low")
+#             save_data_req_pcbm(game,data_desc_pcbm, merged_arr_rec_pcbm, "rec")
+#         except TimeoutException:
+#             data_desc = ""
+#             merged_arr_min = []
+#             merged_arr_rec = []
+            
