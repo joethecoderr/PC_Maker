@@ -8,7 +8,7 @@ import joblib
 import pipeline
 import transformers
 import model_manage 
-from scrapers import scrap_main 
+import scrap_main 
 
 app = Flask(__name__)
 CORS(app,supports_credentials=True, resources={r'/.*': {'origins': '*'}})

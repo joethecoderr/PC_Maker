@@ -1,12 +1,12 @@
-import argparse
-import logging
-import pandas as  pd
-import numpy as np
+#import argparse
+#import logging
+#import pandas as  pd
+##import numpy as np
 
-import scrap_from_pcbenchmark 
-from scrapers import scrap_from_steam
-from scrapers import can_you_run_it
-import get_games
+import scrap_from_pcbenchmark
+#from scrapers import scrap_from_steam
+#from scrapers import can_you_run_it
+#import get_games
 from requirements import LowReqSteam, RecReqSteam, LowReqPCGBM, RecReqPCGBM
 from requirements import LowReqCanYouRunIt, RecReqCanYouRunIt
 import re

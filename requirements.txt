@@ -7,3 +7,9 @@ sklearn
 scipy
 flask
 flask-cors
+requests
+lxml
+selenium
+sqlalchemy
+mysql-client
+mysql-server
