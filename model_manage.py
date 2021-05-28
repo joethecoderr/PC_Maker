@@ -19,10 +19,8 @@ def Create_New_Transformers(df):
     df = clean_GB.transform(df, "Ram") 
     Ram_scaler_low = StandardScaler()
     size_scaler_low = StandardScaler()
-    
     df[["size_scaled"]] = size_scaler_low.fit_transform(df[["size"]])
-    df[["Ram_scaled"]] = Ram_scaler_low.fit_transform(df[["Ram"]])
-    
+    df[["Ram_scaled"]] = Ram_scaler_low.fit_transform(df[["Ram"]])    
     joblib.dump(size_scaler_low, "Transformers/size_scaler_rec.pkl")
     joblib.dump(Ram_scaler_low, "Transformers/Ram_scaler_rec.pkl")
 
