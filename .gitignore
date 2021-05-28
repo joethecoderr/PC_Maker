@@ -6,3 +6,5 @@ scrapers/debug.log
 scrapers/scrapers/__pycache__/*
 scrapers/scrapers/.ipynb_checkpoints/*
 scrapers/scrapers/*.exe
+db.py
+venv.sh
