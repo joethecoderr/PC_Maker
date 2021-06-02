@@ -14,6 +14,14 @@ app = Flask(__name__)
 CORS(app,supports_credentials=True, resources={r'/.*': {'origins': '*'}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 #cors = CORS(app, resources={r"/*": {"origins": "*"}})
+@app.route('/get_games', methods = ['GET'])
+def get_games():
+    games = Create_Dataframes.get_games()
+    if games is not None:
+        return jsonify(games)
+    else:
+        return jsonify({'Error': 'No se encontraron juegos'})
+
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
     if request.method == 'POST':

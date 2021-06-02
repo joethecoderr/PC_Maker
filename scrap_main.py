@@ -11,7 +11,7 @@ from requirements import LowReqSteam, RecReqSteam, LowReqPCGBM, RecReqPCGBM
 from requirements import LowReqCanYouRunIt, RecReqCanYouRunIt
 import re
 from base import Base, engine, Session
-from scrapers.can_you_run_it import scrape
+from scrapers.scrapers.can_you_run_it import scrape
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 def save_data_req_steam(game,descr, data, low_or_rec):
