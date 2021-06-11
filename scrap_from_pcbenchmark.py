@@ -11,19 +11,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import sys
 import numpy as np 
-
+from pyvirtualdisplay import Display
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
+#chrome_options.add_argument('--no-sandbox')
+#chrome_options.add_argument('--headless')
+#chrome_options.add_argument('--disable-dev-shm-usage')
 
 def get_game_link(game):
     
-         
+        #display = Display(visible=0,  size=(1024, 768))  
+        #display.start()
+        driver = webdriver.Chrome()
+        driver.set_window_size(1920, 1080)
         print(f"Getting page for {game} ..."  )
         
-        driver = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
+        driver = webdriver.Chrome('./chromedriver',chrome_options=chrome_options)
         driver.get("https://www.pcgamebenchmark.com/")
         assert "PCGameBenchmark" in driver.title #assert is for debugging, if the condition is false, AssertionError is raised. 
         #Here we are using it to confirm that the title has "Steam".

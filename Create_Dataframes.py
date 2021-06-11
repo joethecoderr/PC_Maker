@@ -1,5 +1,6 @@
 import pymysql
 import pandas as pd
+from db import connection_string
 
 def get_data(table_name_low,table_name_rec ):
     conn = pymysql.connect(**connection_string)
@@ -36,13 +37,7 @@ if __name__ == '__main__':
     pass
 
 def look_for_game_db(game, table_name):
-    conn = pymysql.connect(
-    host='pcmakerinstance.c15oncijbytw.us-east-2.rds.amazonaws.com',
-    port=int(3306),
-    user="admin",
-    passwd="password",
-    db="dbname",
-    )
+    conn = pymysql.connect(**connection_string)
     cursor=conn.cursor()
     conn.connect()
     try:

@@ -1,7 +1,7 @@
 import joblib
 import numpy as np
 from flask import Flask
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 from flask_cors import CORS, cross_origin
 import Create_Dataframes
 import joblib
@@ -22,6 +22,18 @@ def get_games():
     else:
         return jsonify({'Error': 'No se encontraron juegos'})
 
+
+@app.route('/train_model', methods = ['GET'])
+def TrainModel():
+    if request.method == 'GET':
+        try:
+            df_low, df_rec = Create_Dataframes.create_dataframes("low_req_pcbenchmark", "rec_req_pcbenchmark")
+            model_manage.Create_New_Model(df_rec, 10, "test_model")
+            return make_response(jsonify({"message": "Success!"}), 200)
+        except Exception:
+            return make_response(jsonify({"message": "AAAAAAAAAAAAAA!"}),500)
+       
+    
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
     if request.method == 'POST':
@@ -29,6 +41,7 @@ def hello():
         game = request.form.get('name')
         #look on db for req
         new_instance = Create_Dataframes.look_for_game_db(game, "rec_req_pcbenchmark")
+        
         if len(new_instance) > 0:
             instance_transformed = pipeline.transform_input(new_instance)
             model = joblib.load("Models/test_model.pkl")
@@ -42,6 +55,7 @@ def hello():
                 Processors.append(df_rec["Processor"][idx])
             unique_graphics, counts_graphics = np.unique(Graphics, return_counts=True)
             unique_processors,counts_processors = np.unique(Processors, return_counts=True)
+            print(unique_processors, counts_processors)
             max_value_graphics = max(counts_graphics) 
             max_graphic = unique_graphics[np.where(counts_graphics==max_value_graphics)]
             max_value_processors = max(counts_processors) 

@@ -1,5 +1,7 @@
 __pycache__/*
 venv/*
+env/*
+usr/*
 run_app.sh
 scrapers/*.exe
 scrapers/debug.log
